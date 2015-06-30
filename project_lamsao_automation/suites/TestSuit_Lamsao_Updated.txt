@@ -1,0 +1,52 @@
+*** Settings ***
+Test Template     Flow_Login_From_Invalid_To_Valid
+Library           Selenium2Library    timeout=5.0    implicit_wait=5.0    run_on_failure=Capture Page Screenshot
+Library           String
+
+*** Test Cases ***    TC            Action                              Username    Password    Alert                                     Error Content                          Username Return
+Login_Invalid_To_Valid
+                      [Setup]       Setup Login
+                      TC1           Leave Username and password null    ${EMPTY}    ${EMPTY}    Yêu cầu nhập thông tin Tên đăng nhập !    ${EMPTY}                               ${EMPTY}
+                      TC2           Leave Password null                 quang       ${EMPTY}    Yêu cầu nhập thông tin Mật khẩu !         ${EMPTY}                               ${EMPTY}
+                      TC3           Leave Username is null              ${EMPTY}    12345       Yêu cầu nhập thông tin Tên đăng nhập !    ${EMPTY}                               ${EMPTY}
+                      TC4           Username invalid                    abcdefgh    111111      ${EMPTY}                                  Tài khoản đăng nhập không tồn tại !    ${EMPTY}
+                      TC5           Password invalid                    quang       1           ${EMPTY}                                  Tài khoản đăng nhập không hợp lệ !     ${EMPTY}
+                      TC6           Username and Password invalid       abcdefgh    123         ${EMPTY}                                  Tài khoản đăng nhập không tồn tại !    ${EMPTY}
+                      TC7           Username and Password valid         quang       111111      ${EMPTY}                                  ${EMPTY}                               quang
+                      [Teardown]    Close Browser
+
+Debug                 [Setup]       Setup Login
+                      TC7           Username and Password valid         quang       111111      ${EMPTY}                                  ${EMPTY}                               quang
+                      [Teardown]
+
+*** Keywords ***
+Setup Login
+    Open Browser    http://www.lamsao.com/
+    Maximize Browser Window
+    Page Should Contain    Làm sao
+    Click Link    css=#login
+
+Flow_Login_From_Invalid_To_Valid
+    [Arguments]    ${id}    ${action}    ${username}    ${password}    ${alert}    ${errorContent}
+    ...    ${displayName}=${EMPTY}
+    Login To Lamsao    ${username}    ${password}
+    Run Keyword If    '${alert}' != '${EMPTY}'    Alert Should Be Present    ${alert}
+    Run Keyword If    '${alert}' == '${EMPTY}'    Verify Login Case of Success    ${errorContent}    ${displayName}
+
+Login To Lamsao
+    [Arguments]    ${username}    ${password}=${EMPTY}
+    Input Text    css=#ctl00_cphMain_ctl00_ctl00_ctl00_txtUserName    ${username}    #input username
+    Input Password    css=#ctl00_cphMain_ctl00_ctl00_ctl00_txtPassword    ${password}    #input password
+    Click Button    css=#ctl00_cphMain_ctl00_ctl00_ctl00_btnLogin    #Press Login button
+
+Verify Login Case of Success
+    [Arguments]    ${errorContent}    ${displayName}=${EMPTY}
+    Run Keyword If    '${errorContent}'!='${EMPTY}'    Page Should Contain Element    css=#login_new > div.table_login > div:nth-child(1) > div.value    ${errorContent}
+    Run Keyword If    '${displayName}'=='${EMPTY}'    Page Should Contain Element    css=#banner > div > div:nth-child(1) > div.headerCopy > div > div > a:nth-child(4)    ${displayName}
+    [Teardown]    Logout
+
+Logout
+    ${isLogin}    Run Keyword And Return Status    Element Should Be Visible    css=#logout
+    Return From Keyword If    '${isLogin}'=='False'    User has not login yet
+    Click Element    css=#logout
+    Confirm Action

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20150623 20:06:01.013" generator="Robot 2.8.7 (Python 2.7.9 on win32)">
+<suite source="D:\project_auto\suites" id="s1" name="Suites">
+<suite source="D:\project_auto\suites\TestSuit_Lamsao_Again.robot" id="s1-s1" name="TestSuit Lamsao Again">
+<test id="s1-s1-t1" name="Login_Invalid_To_Valid">
+<kw type="setup" name="Setup_Login">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Open Browser">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>http://www.lamsao.com/</arg>
+</arguments>
+<msg timestamp="20150623 20:06:01.285" level="INFO">Opening browser 'firefox' to base url 'http://www.lamsao.com/'</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20150623 20:06:01.314" level="FAIL">No browser is open</msg>
+<status status="FAIL" endtime="20150623 20:06:01.314" starttime="20150623 20:06:01.312"></status>
+</kw>
+<msg timestamp="20150623 20:06:01.314" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: No browser is open</msg>
+<msg timestamp="20150623 20:06:01.316" level="FAIL">Failed to find firefox binary. You can set it by specifying the path to 'firefox_binary':
+
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+
+binary = FirefoxBinary('/path/to/binary')
+driver = webdriver.Firefox(firefox_binary=binary)</msg>
+<status status="FAIL" endtime="20150623 20:06:01.317" starttime="20150623 20:06:01.285"></status>
+</kw>
+<status status="FAIL" endtime="20150623 20:06:01.317" starttime="20150623 20:06:01.284"></status>
+</kw>
+<kw type="teardown" name="Setup_Logout">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>css=#logout</arg>
+</arguments>
+<msg timestamp="20150623 20:06:01.320" level="INFO">Clicking element 'css=#logout'.</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20150623 20:06:01.321" level="FAIL">No browser is open</msg>
+<status status="FAIL" endtime="20150623 20:06:01.321" starttime="20150623 20:06:01.320"></status>
+</kw>
+<msg timestamp="20150623 20:06:01.321" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: No browser is open</msg>
+<msg timestamp="20150623 20:06:01.324" level="FAIL">No browser is open</msg>
+<status status="FAIL" endtime="20150623 20:06:01.324" starttime="20150623 20:06:01.319"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Choose Ok On Next Confirmation">
+<doc>Undo the effect of using keywords `Choose Cancel On Next Confirmation`. Note</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20150623 20:06:01.325" starttime="20150623 20:06:01.324"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Close All Browsers">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20150623 20:06:01.325" starttime="20150623 20:06:01.325"></status>
+</kw>
+<status status="FAIL" endtime="20150623 20:06:01.326" starttime="20150623 20:06:01.318">No browser is open</status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="FAIL" endtime="20150623 20:06:01.326" critical="yes" starttime="20150623 20:06:01.282">Setup failed:
+Failed to find firefox binary. You can set it by specifying the path to 'firefox_binary':
+
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+
+binary = FirefoxBinary('/path/to/binary')
+driver = webdriver.Firefox(firefox_binary=binary)
+
+Also teardown failed:
+No browser is open</status>
+</test>
+<doc></doc>
+<metadata>
+</metadata>
+<status status="FAIL" endtime="20150623 20:06:01.329" starttime="20150623 20:06:01.079"></status>
+</suite>
+<doc></doc>
+<metadata>
+</metadata>
+<status status="FAIL" endtime="20150623 20:06:01.334" starttime="20150623 20:06:01.014"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="0">Critical Tests</stat>
+<stat fail="1" pass="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="1" pass="0" id="s1" name="Suites">Suites</stat>
+<stat fail="1" pass="0" id="s1-s1" name="TestSuit Lamsao Again">Suites.TestSuit Lamsao Again</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20150623 20:06:01.314" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: No browser is open</msg>
+<msg timestamp="20150623 20:06:01.321" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: No browser is open</msg>
+</errors>
+</robot>

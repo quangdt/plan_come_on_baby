@@ -1,2 +1,25 @@
+*** Settings ***
+Library           Collections
+Library           Selenium2Library    timeout=5.0    implicit_wait=5.0    run_on_failure=Capture Page Screenshot
+
 *** Test Cases ***
 Create Dictionary
+    @{gia_dinh}=    Create Dictionary    Lam cha me    1    Chuyen gia dinh    2
+    @{Cha_me_tre}=    Create Dictionary    Mang thai    1    Nuoi con    2    Day con
+    ...    3    Sam do cho me va be    4    Do choi cho be    5
+    @{Am_Thuc}=    Create Dictionary    Lam banh    1    Nau an    2    Do uong
+    ...    3    Dac san    4    Meo nau an    5    An gi o dau
+    ...    6
+    @{total}=    Create Dictionary    1    @{gia_dinh}    3    @{Cha_me_tre}    4
+    ...    @{Am_Thuc}
+    #Log Dictionary    @{total}
+    Log Many    @{total}[2][3]
+
+filter
+    Open Browser    http://www.lamsao.com/hoi-dap
+    Maximize Browser Window
+    Click Element    css=#question_list > div.categories > div.content > ul > li:nth-child(1) > a > span
+    Page Should Contain Element    css=#ctl00_cphMain_ctl00_ctl02_ctl00_lblCate    Gia đình
+    Click Element    css=#div_new_question > div:nth-child(1) > div.right > div.title_question > h2 > a
+    Page Should Contain Element    css=#ctl00_cphMain_ctl00_LeftPane > div.breadcrumb_and_send_question > div.breadcrumb > a:nth-child(3)    Gia đình
+    Close All Browsers

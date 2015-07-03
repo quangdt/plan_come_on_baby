@@ -1,6 +1,7 @@
 *** Settings ***
 Library           Collections
 Library           Selenium2Library    timeout=5.0    implicit_wait=5.0    run_on_failure=Capture Page Screenshot
+Library           String
 
 *** Test Cases ***
 Create Dictionary
@@ -14,6 +15,7 @@ Create Dictionary
     ...    @{Am_Thuc}
     #Log Dictionary    @{total}
     Log Many    @{total}[2][3]
+    Get Text
 
 filter
     Open Browser    http://www.lamsao.com/hoi-dap
@@ -23,3 +25,23 @@ filter
     Click Element    css=#div_new_question > div:nth-child(1) > div.right > div.title_question > h2 > a
     Page Should Contain Element    css=#ctl00_cphMain_ctl00_LeftPane > div.breadcrumb_and_send_question > div.breadcrumb > a:nth-child(3)    Gia đình
     Close All Browsers
+
+Filter_Category_1
+    #Open Browser    http://www.lamsao.com/hoi-dap
+    ${list_cate1}=    Create List    1    2    3    4    5
+    ...    6    7    8    9    10    11
+    ...    12    13    14    15    16    17
+    ...    18    19
+    Convert To Number    ${list_cate1}
+    : FOR    ${choose_cate1}    IN    Convert To Integer    Generate Random String    2    [NUMBERS]
+    \    Run Keyword If    List Should Not Contain Value    ${list_cate1}    ${choose_cate1}    Exit For Loop
+    \    Log    ${choose_cate1}
+
+Random_Integer
+    ${list_integer}    Create List    ${1}    ${2}    ${3}    ${4}    ${5}
+    ...    ${6}    ${7}    ${8}    ${9}    ${10}    ${11}
+    ...    ${12}    ${13}    ${14}    ${15}    ${16}    ${17}
+    ...    ${18}    ${19}
+    :FOR    ${choose}    IN    ${list_integer}
+    \    Log    ${choose}abc
+    \    Exit For Loop

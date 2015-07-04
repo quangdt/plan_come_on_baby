@@ -1,0 +1,53 @@
+*** Settings ***
+Library           Selenium2Library    10    10    Capture Page Screenshot
+Library           String
+
+*** Test Cases ***
+test
+    [Template]
+    ${rand}    Evaluate    random.randint(0, 19)    random,sys
+    Log    ${rand}
+    #    ${total}    ${second}    Add 2 numbers    7    8
+    #    ${total2}    Add multiple numbers    3    5    7
+    ${total3}    Add multiple string    a    b    c
+    ${total4}    Add multiple number_2    1    2    3    -5    8
+    Go to Ha Xinh coffee bar
+    ${status}    Run Keyword And Return Status    Should Be Equal    ${total4}    ${9}
+    Run Keyword If    '${status}'=='True'    log    correct    ELSE    log    incorrect
+    ${emailPrefix}    Generate Random String    10    [LETTERS][NUMBERS]_
+    ${emailSurfix}    Set Variable    @test.com
+    ${randomEmail}    Catenate    SEPARATOR=    ${emailPrefix}    ${emailSurfix}
+    Log    ${randomEmail}
+
+*** Keywords ***
+Add 2 numbers
+    [Arguments]    ${a}    ${b}
+    ${total}    Evaluate    ${a}+${b}
+    ${second}    Evaluate    ${a}+${b}
+    [Return]    ${total}    ${second}
+
+Add multiple numbers
+    [Arguments]    @{numbers}
+    ${total}    Set Variable    0
+    : FOR    ${index}    IN    @{numbers}
+    \    ${total}    Evaluate    ${index}+${total}
+    [Return]    ${total}
+
+Add multiple string
+    [Arguments]    @{numbers}
+    ${total}    Set Variable    ${EMPTY}
+    ${length}    Get Length    ${numbers}
+    : FOR    ${index}    IN RANGE    0    ${length}
+    \    ${total}    Evaluate    '${numbers[${index}]}'+'${total}'
+    [Return]    ${total}
+
+Add multiple number_2
+    [Arguments]    @{numbers}
+    ${total}    Set Variable    0
+    ${length}    Get Length    ${numbers}
+    : FOR    ${index}    IN RANGE    0    ${length}
+    \    ${total}    Evaluate    ${numbers[${index}]}+${total}
+    [Return]    ${total}
+
+Go to ${abc} coffee bar
+    Log    ${abc}

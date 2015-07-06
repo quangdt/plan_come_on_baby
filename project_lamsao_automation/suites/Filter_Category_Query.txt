@@ -15,7 +15,6 @@ Create Dictionary
     ...    @{Am_Thuc}
     #Log Dictionary    @{total}
     Log Many    @{total}[2][3]
-    Get Text
 
 filter
     Open Browser    http://www.lamsao.com/hoi-dap
@@ -33,14 +32,16 @@ Filter_Category_1
     Click Element    css=#question_list > div.categories > div.content > ul > li:nth-child(${random_cate1}) > a > span
     ${get_url}    Get Location
     @{list_question}    Create List    ${1}    ${2}    ${3}    ${4}    ${5}
-    ...    ${6}    ${7}     ${8}     ${9}     ${10}     ${11}
-    ...    ${12}     ${13}     ${14}     ${15}     ${16}     ${17}
-    ...    ${18}     ${19}     ${20}
-    Click Element    css=#a_much_answer
+    ...    ${6}    ${7}    ${8}    ${9}    ${10}    ${11}
+    ...    ${12}    ${13}    ${14}    ${15}    ${16}    ${17}
+    ...    ${18}    ${19}    ${20}
     :FOR    ${question}    IN    @{list_question}
-    \    Open Browser    ${get_url}
-    #    ${return_cate1}    Get Text    css=#ctl00_cphMain_ctl00_LeftPane > div.breadcrumb_and_send_question > div.breadcrumb > a:nth-child(3)
-    #    Run Keyword If    '${value_cate1}'!='${return_cate1}'    Open Context Menu    css=
+    \    Click Element    css=#a_much_answer
+    \    ${question_name}    Get Text    css=#div_much_answer > div:nth-child(${question}) > div.right > div.title_question > a
+    \    Click Element    css=#div_much_answer > div:nth-child(${question}) > div.right > div.title_question > a
+    \    ${return_cate1}    Get Text    css=#ctl00_cphMain_ctl00_LeftPane > div.breadcrumb_and_send_question > div.breadcrumb > a:nth-child(3)
+    \    Go Back
+    \    Exit For Loop If    '${value_cate1}'!='${return_cate1}'
 
 Random_Integer
     @{list_integer}    Create List    ${1}    ${2}    ${3}    ${4}    ${5}
@@ -52,5 +53,9 @@ Random_Integer
     \    Exit For Loop
     ${rand}    Evaluate    random.randint(0, 19)    random,sys
     Log    ${rand}
-    :FOR    ${index}    IN    RANGE    1    12
+    : FOR    ${index}    IN    RANGE    1    12
     \    log    ${index}
+
+*** Keywords ***
+Get_Information_Question
+    \    ${auth_question}    Get Text    css=#div_much_answer > div:nth-child(1) > div.right > div.question_info > div.author > strong > a > span

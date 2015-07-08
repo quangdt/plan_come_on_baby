@@ -44,11 +44,16 @@ Filter_Category_1
     \    Exit For Loop If    '${value_cate1}'!='${return_cate1}'
 
 Random_Integer
+<<<<<<< Updated upstream
     @{list_integer}    Create List    ${1}    ${2}    ${3}    ${4}    ${5}
+=======
+    @{list_integer}=    Create List    ${1}    ${2}    ${3}    ${4}    ${5}
+>>>>>>> Stashed changes
     ...    ${6}    ${7}    ${8}    ${9}    ${10}    ${11}
     ...    ${12}    ${13}    ${14}    ${15}    ${16}    ${17}
     ...    ${18}    ${19}
     : FOR    ${choose}    IN    @{list_integer}
+<<<<<<< Updated upstream
     \    Log    ${choose}abc
     \    Exit For Loop
     ${rand}    Evaluate    random.randint(0, 19)    random,sys
@@ -59,3 +64,13 @@ Random_Integer
 *** Keywords ***
 Get_Information_Question
     \    ${auth_question}    Get Text    css=#div_much_answer > div:nth-child(1) > div.right > div.question_info > div.author > strong > a > span
+=======
+    \    ${random_cate1}=    Generate Random String    2    [NUMBERS]
+    \    ${convert}=    Convert To Integer    ${random_cate1}
+    \    Run Keyword If    ${choose} != ${convert}    Log    ${choose}    ELSE    Exit For Loop
+    ${EMPTY}
+
+log
+    ${random}=    Evaluate    random.ranint(1,19)
+    log    ${random}
+>>>>>>> Stashed changes

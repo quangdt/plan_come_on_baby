@@ -27,6 +27,7 @@ filter
 
 Filter_Category_1
     Open Browser    http://www.lamsao.com/hoi-dap
+    Maximize Browser Window
     ${random_cate1}    Evaluate    random.randint(1, 19)    random,sys
     ${value_cate1}    Get Text    css=#question_list > div.categories > div.content > ul > li:nth-child(${random_cate1}) > a > span
     Click Element    css=#question_list > div.categories > div.content > ul > li:nth-child(${random_cate1}) > a > span
@@ -35,42 +36,26 @@ Filter_Category_1
     ...    ${6}    ${7}    ${8}    ${9}    ${10}    ${11}
     ...    ${12}    ${13}    ${14}    ${15}    ${16}    ${17}
     ...    ${18}    ${19}    ${20}
-    :FOR    ${question}    IN    @{list_question}
+    : FOR    ${question}    IN    @{list_question}
     \    Click Element    css=#a_much_answer
     \    ${question_name}    Get Text    css=#div_much_answer > div:nth-child(${question}) > div.right > div.title_question > a
+    \    #    ${time_question}    Get Text    css=#div_much_answer > div:nth-child(${question}) > div.right > div.createdon-question
+    \    ${author_question}    Get Text    css=#div_much_answer > div:nth-child(${question}) > div.right > div.question_info > div.author > strong > a > span
     \    Click Element    css=#div_much_answer > div:nth-child(${question}) > div.right > div.title_question > a
+    \    Wait Until Element Is Visible    css=#ctl00_cphMain_ctl00_LeftPane > div.breadcrumb_and_send_question > div.breadcrumb > a:nth-child(3)    100    ${Khong tim thay phan tu}
     \    ${return_cate1}    Get Text    css=#ctl00_cphMain_ctl00_LeftPane > div.breadcrumb_and_send_question > div.breadcrumb > a:nth-child(3)
+    \    ${title_question1}    Get Text    css=#question_detail > div.question > div > div.question_content_top > div.question_content_right > h1
+    \    #    ${time_question1}    Get Text    css=#question_detail > div.question > div > div.question_content_top > div.question_content_right > div.question_date > strong
+    \    ${author_question1}    Get Text    css=#question_detail > div.question > div > div.question_content_top > div.question_content_left > div.realname > a
     \    Go Back
-    \    Exit For Loop If    '${value_cate1}'!='${return_cate1}'
+    \    Exit For Loop If    '${value_cate1}' != '${return_cate1}' or '${title_question1}' != '${question_name}' or '${author_question}' != '${author_question1}'
 
 Random_Integer
-<<<<<<< Updated upstream
-    @{list_integer}    Create List    ${1}    ${2}    ${3}    ${4}    ${5}
-=======
-    @{list_integer}=    Create List    ${1}    ${2}    ${3}    ${4}    ${5}
->>>>>>> Stashed changes
-    ...    ${6}    ${7}    ${8}    ${9}    ${10}    ${11}
-    ...    ${12}    ${13}    ${14}    ${15}    ${16}    ${17}
-    ...    ${18}    ${19}
-    : FOR    ${choose}    IN    @{list_integer}
-<<<<<<< Updated upstream
-    \    Log    ${choose}abc
-    \    Exit For Loop
-    ${rand}    Evaluate    random.randint(0, 19)    random,sys
-    Log    ${rand}
-    : FOR    ${index}    IN    RANGE    1    12
-    \    log    ${index}
 
 *** Keywords ***
 Get_Information_Question
     \    ${auth_question}    Get Text    css=#div_much_answer > div:nth-child(1) > div.right > div.question_info > div.author > strong > a > span
-=======
-    \    ${random_cate1}=    Generate Random String    2    [NUMBERS]
-    \    ${convert}=    Convert To Integer    ${random_cate1}
-    \    Run Keyword If    ${choose} != ${convert}    Log    ${choose}    ELSE    Exit For Loop
-    ${EMPTY}
 
 log
     ${random}=    Evaluate    random.ranint(1,19)
     log    ${random}
->>>>>>> Stashed changes

@@ -1,0 +1,16 @@
+*Settings*							
+Library	OperatingSystem						
+							
+*Variables*							
+${MESSAGE}	Hello,world!						
+							
+*Test Cases*							
+Test Case	#My Test	[Documentation]	Example test				
+	[Documentation]	abc	cdef	ghij	klm		
+	Log	${MESSAGE}					
+	#My Keyword	/Python27					
+	Should Be Equal	${MESSAGE}	Hello,world!				
+							
+*Keywords*							
+My Keyword	[Arguments]	${path}					
+	Directory Should Exist	${path}					

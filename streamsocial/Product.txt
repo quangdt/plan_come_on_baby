@@ -1,0 +1,23 @@
+*** Settings ***
+Library           Selenium2Library    timeout=5.0    implicit_wait=5.0    run_on_failure=Capture Page Screenshot
+
+*** Test Cases ***
+Add-Product
+    Open Browser    https://test-website6.bizwebvietnam.net/admin    #truy cập vào store: test-website6
+    Maximize Browser Window
+    Login_Store    quangdt@dkt.com.vn    123456    #Login vào tài khoản quản trị
+    Click Element    css=body > div.page-wrapper > aside > nav > ul > li:nth-child(4) > a    #click chọn vào menu sản phẩm
+    Click Element    css=#fatherFormFilterAndSavedSearch > div.page-heading.page-heading-md > div > a.btn.btn-default.btn-add > span    #Click chọn vào trang thêm mới sản phẩm
+    Input Text    css=#Name    test add new product    #Nhập vào tên sản phẩm
+    Input Text    css=#product_type    abc
+    Input Text    css=#vendor    new vendor
+    Click Element    css=#frm-create-edit-product > div:nth-child(3) > div:nth-child(2) > div.col-md-8.col-lg-9 > div > div > div:nth-child(1) > div > a
+    #Choose File    my_upload_field    D:\anh mang\11578_199482753508639_1418711369_n.jpg
+    Choose Cancel On Next Confirmation
+
+*** Keywords ***
+Login_Store
+    [Arguments]    ${email_store}=quangdt@dkt.com.vn    ${password_store}=123456
+    Input Text    css=#Email    ${email_store}    #quangdt@dkt.com.vn
+    Input Password    css=#Password    ${password_store}    #123456
+    Click Element    css=body > div.container > div > div:nth-child(1) > form > input

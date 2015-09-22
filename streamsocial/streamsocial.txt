@@ -1,0 +1,78 @@
+*** Settings ***
+Library           Selenium2Library    timeout=5.0    implicit_wait=5.0    run_on_failure=Capture Page Screenshot
+
+*** Test Cases ***
+ConfigStreamSocial
+    [Setup]    Give_Config
+    [Template]
+    Check_Setup_App
+    Handle_iFrame    '#567890'
+    Save_Config
+    [Teardown]    Teamdown_App
+
+DeleteApp
+    Open Browser    https://test-website7.bizwebvietnam.net/admin
+    Maximize Browser Window
+    Input Text    css=#Email    quangdt@dkt.com.vn
+    Input Password    css=#Password    123456
+    Click Element    css=body > div.container > div > div:nth-child(1) > form > input
+    Click Element    css=body > div.page-wrapper > aside > nav > ul > li:nth-child(15) > a > i    #body > div.page-wrapper > aside > nav > ul > li.active.open > a
+    Click Element    css=body > div.page-wrapper > div > div > div.list-apps > div > div > div.col-md-8.col-lg-9.installed-app > div:nth-child(1) > div > div.app-details > ul > li    #body > div.page-wrapper > div > div > div.list-apps > div > div > div.col-md-8.col-lg-9.installed-app > div:nth-child(1) > div > div.app-details > ul > li > a
+    #Wait Until Element Is Visible    css=body > div.page-wrapper > div > div > div.list-apps > div > div > div.col-md-8.col-lg-9.installed-app > div:nth-child(1) > div > div.app-details > ul > li > div > ul > li:nth-child(3) > a
+    Click Element    css=body > div.page-wrapper > div > div > div.list-apps > div > div > div.col-md-8.col-lg-9.installed-app > div:nth-child(1) > div > div.app-details > ul > li > div > ul > li:nth-child(3) > a
+    Click Element    css=#bizweb-modal > div > div > div.modal-footer > div > div > button.btn.btn-danger
+
+*** Keywords ***
+Give_Config
+    [Arguments]    ${store_Name}=test-website7    ${email_store}=quangdt@dkt.com.vn    ${password_store}=123456
+    Setup
+    Connect_Store    ${store_Name}
+    Login_Store    ${email_store}    ${password_store}
+
+Connect_Store
+    [Arguments]    ${store_Name}=test-website7
+    Focus    css=#ShopName
+    Input Text    css=#ShopName    ${store_Name}    #test-website2
+    Click Element    xpath=.//*[@id='home-layout']/div[1]/div/div/div/div[2]/form/button
+
+Login_Store
+    [Arguments]    ${email_store}=quangdt@dkt.com.vn    ${password_store}=123456
+    Input Text    css=#Email    ${email_store}    #quangdt@dkt.com.vn
+    Input Password    css=#Password    ${password_store}    #123456
+    Click Element    css=body > div.container > div > div:nth-child(1) > form > input
+
+Check_Setup_App
+    Click Element    css=#app-install > form > input.btn.btn-primary.btn-large.top10    #app-install > form > input.btn.btn-primary.btn-large.top10
+    Element Should Contain    css=body > div.page-wrapper > div > div > div > div.page-heading.page-heading-md > h2 > span.breadcrumb > a    Social Media Stream    #body > div.page-wrapper > div > div > div > div.page-heading.page-heading-md > h2 > span.breadcrumb > a
+
+Handle_iFrame
+    [Arguments]    ${color}=#334bae
+    Select Frame    name=app-iframe
+    Click Element    xpath=//*[@id="home-layout"]/div[1]/div/div[1]/div[3]/div/div[2]/form/div[1]/div/div[1]/label
+    Click Element    xpath=.//*[@id='home-layout']/div[1]/div/div[1]/div[3]/div/div[2]/form/div[1]/div/div[2]/label    ##home-layout > div.padding_top_25 > div > div.row > div:nth-child(3) > div > div.panel-body > form > div:nth-child(2) > div > div:nth-child(2) > label
+    Click Element    css=#home-layout > div.padding_top_25 > div > div.row > div:nth-child(3) > div > div.panel-body > form > div:nth-child(3) > div > div > div > div > i
+    #Input Text    css=#TextColor    ${color}    #'#334bae'
+    Unselect Frame
+
+Save_Config
+    Click Element    css=body > div.page-wrapper > div > div > div > div.page-heading.page-heading-md > div > a
+
+When_Handle
+    [Arguments]    ${color}=345673
+    Handle_iFrame    ${color}
+    Save_Config
+
+Then_Config
+    Close All Browsers
+
+Setup
+    Open Browser    https://socialmediastream.bizwebapps.vn/
+    Maximize Browser Window
+
+Teamdown_App
+    Click Element    css=body > div.container > div > div:nth-child(1) > form > input
+    Click Element    xpath=/html/body/div[1]/aside/nav/ul/li[17]/a    #body > div.page-wrapper > aside > nav > ul > li.active.open > a
+    Click Element    css=body > div.page-wrapper > div > div > div.list-apps > div > div > div.col-md-8.col-lg-9.installed-app > div:nth-child(1) > div > div.app-details > ul > li > a
+    Wait Until Element Is Visible    xpath=/html/body/div[1]/div/div/div[4]/div/div/div[2]/div[1]/div/div[2]/ul/li/div/ul/li[3]/a
+    Click Element    xpath=/html/body/div[1]/div/div/div[4]/div/div/div[2]/div[1]/div/div[2]/ul/li/div/ul/li[3]/a
+    Click Element    css=#bizweb-modal > div > div > div.modal-footer > div > div > button.btn.btn-danger
